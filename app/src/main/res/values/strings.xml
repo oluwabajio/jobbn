@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Jobbn</string>
+
+    <string name="facebook_application_id" translatable="false">2494252300687096</string>
+    <string name="facebookb_login_protocol_scheme" translatable="false">fb2494252300687096</string>
+
+
+</resources>

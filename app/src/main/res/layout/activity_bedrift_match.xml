@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".bedrifter.BedriftMatchActivity">
+
+
+    <TextView
+        android:id="@+id/match_beskrivelse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="25dp"
+        android:textColor="#FFF"
+        android:text="Finn kandidater ved å søke på kompetanse"
+        android:textSize="25dp" />
+
+
+    <EditText
+        android:id="@+id/input_kriterier"
+        android:layout_width="268dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:background="#FFF"
+        android:layout_marginLeft="10dp"
+        android:ems="10"
+        android:hint="Eks:Økonom,Butikkmerarbeider,IT"
+        android:inputType="textPersonName"
+         />
+
+    <Button
+        android:id="@+id/match_knapp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#FFF"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/input_kriterier"
+        android:text="Search" />
+
+
+</RelativeLayout>

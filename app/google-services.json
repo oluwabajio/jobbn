@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "775801925233",
+    "firebase_url": "https://jobbn-c8933.firebaseio.com",
+    "project_id": "jobbn-c8933",
+    "storage_bucket": "jobbn-c8933.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775801925233:android:148a8c483b37fabd8b35d0",
+        "android_client_info": {
+          "package_name": "com.example.jobbn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775801925233-t4eca6lap5q6p1gqsa4isdohipqi49u9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jobbn",
+            "certificate_hash": "2f8e4ed4e4a0b11e851ae9837690eb3524ffeb97"
+          }
+        },
+        {
+          "client_id": "775801925233-o7gshtji7mb0phtvq3a6j8dd5v6irnjm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrYLtEwQRDn91zkCWscxdwygZucNGFd3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775801925233-o7gshtji7mb0phtvq3a6j8dd5v6irnjm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

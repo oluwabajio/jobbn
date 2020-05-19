@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".bedrifter.BedriftProfilActivity">
+
+
+    <EditText
+        android:id="@+id/bedrift_navn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:hint="Bedrift navn"
+        android:background="#FFF"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+
+    <EditText
+        android:id="@+id/bedrift_epost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bedrift_navn"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="E-post"
+        android:background="#FFF"
+        android:inputType="textEmailAddress" />
+
+
+
+    <Button
+        android:id="@+id/lagre_bedrift_knapp"
+        android:layout_width="167dp"
+        android:layout_height="86dp"
+        android:layout_below="@id/bedrift_epost"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="#FFF"
+        android:text="Lagre" />
+
+
+
+
+</RelativeLayout>
