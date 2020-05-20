@@ -17,4 +17,8 @@
 
     </style>-->
 
+    <style name="AppTheme_Dark_Dialog" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
 </resources>

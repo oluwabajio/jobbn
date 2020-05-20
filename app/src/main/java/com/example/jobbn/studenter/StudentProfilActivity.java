@@ -3,6 +3,7 @@ package com.example.jobbn.studenter;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,9 +30,8 @@ import java.util.List;
 public class StudentProfilActivity extends AppCompatActivity {
 
     private EditText mStudentNavn;
-    private EditText mStudentEpost;
     private EditText mStudentAge;
-    private EditText mStudentDescription;
+    private EditText mStudentKompetanse;
     private EditText mStudentEmail;
     private Button mLagreStudent;
     private DatabaseReference mDatabase;
@@ -52,7 +52,7 @@ public class StudentProfilActivity extends AppCompatActivity {
 
     private void getStudentDetails() {
         String userId = sessionManager.getUuid();
-        mDatabase .child("Studenter").child(userId).addValueEventListener(new ValueEventListener() {
+        mDatabase.child("Studenter").child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -82,12 +82,15 @@ public class StudentProfilActivity extends AppCompatActivity {
         mLagreStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String navn = mStudentNavn.getText().toString();
-                String email = mStudentEmail.getText().toString().trim();
-                String age = mStudentAge.getText().toString();
-                String descrtiption = mStudentDescription.getText().toString();
 
-                addStudentToDb(navn, email, age, descrtiption);
+                if (isValidFields()) {
+                    String navn = mStudentNavn.getText().toString();
+                    String email = mStudentEmail.getText().toString().trim();
+                    String age = mStudentAge.getText().toString();
+                    String kompetanse = mStudentKompetanse.getText().toString();
+
+                    addStudentToDb(navn, email, age, kompetanse);
+                }
             }
         });
     }
@@ -96,27 +99,66 @@ public class StudentProfilActivity extends AppCompatActivity {
         mStudentNavn = findViewById(R.id.student_navn);
         mStudentEmail = findViewById(R.id.student_email);
         mStudentAge = findViewById(R.id.student_age);
-        mStudentDescription = findViewById(R.id.student_description);
+        mStudentKompetanse = findViewById(R.id.student_kompetanse);
 
         mLagreStudent = findViewById(R.id.lagre_student_knapp);
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
 
-    private void addStudentToDb(String name, String email, String age, String description) {
+    private void addStudentToDb(String name, String email, String age, String kompetanse) {
         String userId = sessionManager.getUuid();
-        Student user = new Student(name, email, age, description);
+        Student user = new Student(name, email, age, kompetanse);
 
         mDatabase.child("Studenter")
-                .child(userId).setValue(user);
+                .child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(StudentProfilActivity.this, "Data saved to database successfully", Toast.LENGTH_LONG).show();
+                    if (getIntent().getStringExtra("coming_from").equalsIgnoreCase("MainActivity")) {
+                        startActivity(new Intent(StudentProfilActivity.this, StudentHomeActivity.class));
+                    }
+
+                } else {
+                    Toast.makeText(StudentProfilActivity.this, "Could not Save to database, try again", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
 
     private void populateEdittexts() {
         mStudentNavn.setText(sessionManager.getDisplayName());
         mStudentEmail.setText(sessionManager.getEmail());
-        mStudentDescription.setText(sessionManager.getDescription());
+        mStudentKompetanse.setText(sessionManager.getDescription());
         mStudentAge.setText(sessionManager.getAge());
 
+    }
+
+    private boolean isValidFields() {
+        if (mStudentNavn.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Enter Student Name", Toast.LENGTH_LONG).show();
+            mStudentNavn.requestFocus();
+            return false;
+        }
+        if (mStudentEmail.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Enter Student Email", Toast.LENGTH_LONG).show();
+            mStudentEmail.requestFocus();
+            return false;
+        }
+        if (mStudentAge.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Enter Student Age", Toast.LENGTH_LONG).show();
+            mStudentAge.requestFocus();
+            return false;
+        }
+        if (mStudentKompetanse.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Enter Student Kompetanse", Toast.LENGTH_LONG).show();
+            mStudentKompetanse.requestFocus();
+            return false;
+        }
+
+
+        return true;
     }
 }

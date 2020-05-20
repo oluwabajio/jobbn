@@ -43,7 +43,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolders>{
 
     @Override
     public void onBindViewHolder(MatchesViewHolders holder, int position) {
-        holder.mMatchId.setText(matchesList.get(position).getKey());
+     //   holder.mMatchId.setText(matchesList.get(position).getKey());
         holder.mMatchName.setText(matchesList.get(position).getName());
         holder.status = status;
         Log.e("ggg", "Name is "+ matchesList.get(position).getName() + "key is "+ matchesList.get(position).getKey());

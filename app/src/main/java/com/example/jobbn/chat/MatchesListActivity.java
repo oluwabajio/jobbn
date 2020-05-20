@@ -25,7 +25,7 @@ public class MatchesListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mMatchesLayoutManager;
 
     private String cusrrentUserID;
-    String Namee, Namee2;
+    String Status, Status2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +36,12 @@ public class MatchesListActivity extends AppCompatActivity {
         String comingFrom = getIntent().getStringExtra("coming_from");
 
         if (comingFrom.equalsIgnoreCase("Student")) {
-            Namee = "Studenter";
-            Namee2 = "Bedrifter";
+            Status = "Studenter";
+            Status2 = "Bedrifter";
 
         } else if (comingFrom.equalsIgnoreCase("Bedrifter")) {
-            Namee = "Bedrifter";
-            Namee2 = "Studenter";
+            Status = "Bedrifter";
+            Status2 = "Studenter";
         }
 
 
@@ -62,7 +62,7 @@ public class MatchesListActivity extends AppCompatActivity {
 
     private void getUserMatchId() {
 
-        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child(Namee).child(cusrrentUserID).child("connections").child("matches");
+        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child(Status).child(cusrrentUserID).child("connections").child("matches");
         matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -82,7 +82,7 @@ public class MatchesListActivity extends AppCompatActivity {
     }
 
     private void FetchMatchInformation(String key) {
-        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child(Namee2).child(key);
+        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child(Status2).child(key);
         userDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

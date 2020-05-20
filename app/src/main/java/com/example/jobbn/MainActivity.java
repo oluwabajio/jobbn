@@ -11,7 +11,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.jobbn.bedrifter.BedriftHomeActivity;
+import com.example.jobbn.bedrifter.BedriftProfilActivity;
 import com.example.jobbn.studenter.StudentHomeActivity;
+import com.example.jobbn.studenter.StudentProfilActivity;
+import com.example.jobbn.utils.AppUtils;
 import com.example.jobbn.utils.MyApplication;
 import com.example.jobbn.utils.SessionManager;
 import com.firebase.ui.auth.AuthUI;
@@ -21,6 +24,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //mDatabase.child("Navn").setValue("Ali");
-                Intent intent = new Intent(MainActivity.this, StudentHomeActivity.class);
+                Intent intent = new Intent(MainActivity.this, StudentProfilActivity.class);
+                intent.putExtra("coming_from", "MainActivity");
                 startActivity(intent);
 
 
@@ -59,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //mDatabase.child("Name").setValue("Ikea");
-                Intent intent = new Intent(MainActivity.this, BedriftHomeActivity.class);
+                Intent intent = new Intent(MainActivity.this, BedriftProfilActivity.class);
+                intent.putExtra("coming_from", "MainActivity");
                 startActivity(intent);
 
 
@@ -122,18 +132,17 @@ public class MainActivity extends AppCompatActivity {
                 //get user
                 FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
                 MyApplication.getInstance().getSharedPreferences().edit().putString("UID", user.getUid()).apply();
-                Toast.makeText(this,""+user.getEmail() ,Toast.LENGTH_LONG).show();
+
                 sessionManager.setEmail(user.getEmail());
                 sessionManager.setDisplayName(user.getDisplayName());
                 sessionManager.setUuid(user.getUid());
 
 
+
+
                 if (user != null) {
                     btn_sign_out.setEnabled(true);
-                    Intent intent = new Intent(MainActivity.this, BedriftHomeActivity.class);
-                    startActivity(intent);
-
-
+                    checkIfUserIsBedrifter(user.getUid());
                 }else{
                     btn_sign_out.setEnabled(true);
                     btn_student.setEnabled(true);
@@ -147,5 +156,52 @@ public class MainActivity extends AppCompatActivity {
                 }
 
         }
+    }
+
+    private void checkIfUserIsBedrifter(final String userId) {
+        AppUtils.initLoadingDialog(this, "Please Wait");
+        final DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child("Bedrifter").child(userId);
+        matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Intent intent = new Intent(MainActivity.this, BedriftHomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                   checkIfUserIsStudent(userId);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
+
+    private void checkIfUserIsStudent(String userId) {
+        DatabaseReference matchDb2 = FirebaseDatabase.getInstance().getReference().child("Studenter").child(userId);
+        matchDb2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Intent intent = new Intent(MainActivity.this, StudentHomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                  //disable loading dialog
+                    AppUtils.dismissLoadingDialog();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

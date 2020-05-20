@@ -14,6 +14,8 @@ public class SessionManager {
     public static final String UUID = "UUID";
     public static final String AGE =  "AGE";
     public static final String DESCRIPTION = "DESCRIPTION";
+    public static final String BEDRIFTER_DISPLAY_NAME = "BEDRIFTER_DISPLAY_NAME";
+    public static final String BEDRIFTER_EMAIL = "BEDRIFTER_EMAIL";
 
 
     private void setIntPreference(String name, int value) {
@@ -123,6 +125,23 @@ public class SessionManager {
 
     public String getDescription() {
         return getStringPreference(DESCRIPTION);
+    }
+
+
+    public String getBedrifterEmail() {
+        return getStringPreference(BEDRIFTER_EMAIL);
+    }
+
+    public void setBedrifterEmail(String email) {
+        setStringPreference(BEDRIFTER_EMAIL, email);
+    }
+
+    public String getBedrifterDisplayName() {
+        return getStringPreference(BEDRIFTER_DISPLAY_NAME);
+    }
+
+    public void setBedrifterDisplayName(String name) {
+        setStringPreference(BEDRIFTER_DISPLAY_NAME, name);
     }
 
 

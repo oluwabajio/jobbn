@@ -44,7 +44,7 @@
 
 
     <EditText
-        android:id="@+id/student_description"
+        android:id="@+id/student_kompetanse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
